@@ -1,0 +1,86 @@
+.hm-canva {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000ce;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5em;
+    transition: all 0.3s ease-out;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.3s ease-out;
+}
+
+.close-btn:hover .close-icon {
+    cursor: pointer;
+    color: #ffffffb4;
+}
+
+.close-icon {
+    color: #f1f1f1;
+    width: 44px;
+    transition: all 0.3s ease-out;
+}
+
+.nbl-hm {
+    font-size: 1.6rem !important;
+}
+
+.nbl-hm-cat {
+    background-color: transparent;
+    border: none;
+}
+
+.main-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5em;
+    transition: all 0.3s ease-out;
+}
+
+.cat-links {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5em;
+    transform: translateX(100vw);
+    transition: all 0.3s ease-out;
+}
+
+.goback-btn-hm {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+    border: none;
+    background-color: transparent;
+    transform: translateX(-100px);
+    transition: all 0.3s ease-out;
+}
+
+.goback-btn-hm:hover .goback-icon-hm {
+    cursor: pointer;
+    color: #ffffffb4;
+}
+
+.goback-icon-hm {
+    width: 32px;
+    color: var(--white-50);
+    transition: all 0.3s ease-out;
+}
+
+@media (min-width: 598px) {
+    .hm-canva {
+        display: none;
+    }
+}

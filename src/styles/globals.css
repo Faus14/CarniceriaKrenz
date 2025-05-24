@@ -1,0 +1,27 @@
+/* Globals */
+body {
+    margin: 0;
+    font-family: var(--mainFont);
+    background-color: var(--mainBackground);
+    overflow-x: hidden;
+}
+
+* {
+    letter-spacing: 0.1px;
+}
+
+img {
+    max-width: 100%;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
