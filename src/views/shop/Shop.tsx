@@ -1,100 +1,148 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// Components
-import { ItemListContainer } from 'components/common/itemListContainer/ItemListContainer';
-// Css
+
+// Images
+import aboutUsImg from 'assets/img/others/aside.webp';
+
+// CSS
 import './Shop.css';
 
 export const Shop = () => {
-
-    /* Obtain the category parameter from the
-    url with useParams() hook. */
     const { category } = useParams();
-
-    /* Hook to navigate to another path. */
     const navigate = useNavigate();
 
-    /* Function that navigates to a category path in
-    order to load his products. */
-    const handleClickCategory = (category: string) => {
-        navigate(`/shop/${category}`);
-    }
+    const [isVisible, setIsVisible] = useState({
+        hero: false,
+        about: false,
+        values: false,
+        contact: false,
+        products: false
+    });
 
-    /* If the url param category isn't recognized => navigate to
-    /shop/all. */
-    useEffect(() => {
-        (category !== 'all' && category !== 'wagyu' && category !== 'feedlot' && category !== 'standard' && category !== 'other') && navigate('/shop/all');
-    }, [category, navigate])
+    const heroRef = useRef<HTMLElement>(null);
+    const aboutRef = useRef<HTMLElement>(null);
+    const valuesRef = useRef<HTMLElement>(null);
+    const contactRef = useRef<HTMLElement>(null);
+    const productsRef = useRef<HTMLElement>(null);
 
-    /* Scroll to top when the component
-    is rendered for the first time. */
+    // Observador de intersección para animaciones al hacer scroll
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const targetId = entry.target.getAttribute('data-section');
+                        if (typeof targetId === 'string') {
+                            setIsVisible(prev => ({
+                                ...prev,
+                                [targetId]: true
+                            }));
+                        }
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+
+        const refs = [heroRef, aboutRef, valuesRef, contactRef, productsRef];
+        refs.forEach(ref => {
+            if (ref.current) observer.observe(ref.current);
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    // Redirección si la categoría no es válida
+    useEffect(() => {
+        const validCategories = ['all', 'wagyu', 'feedlot', 'standard', 'other'];
+        if (category && !validCategories.includes(category)) {
+            navigate('/shop/all');
+        }
+    }, [category, navigate]);
+
+    // Scroll al top al renderizar
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
+    // Títulos de categoría
+    const categoryTitles = {
+        all: 'Todos los Productos',
+        wagyu: 'Carnes Wagyu Premium',
+        feedlot: 'Carnes Feedlot',
+        standard: 'Cortes Tradicionales',
+        other: 'Otros Productos'
+    };
+
+    const getCurrentCategoryTitle = () => {
+        return categoryTitles[category as keyof typeof categoryTitles] || 'Nuestros Productos';
+    };
 
     return (
         <div className="shop">
-
-            {/* Shop Banner */}
-            <div className="shop-banner"></div>
-
-            {/* Nosotros Section */}
-            <section className="shop-main">
-
-                <div className="sm-header">
-                    <div className="smh-line"></div>
-                    <h1>Nosotros</h1>
-                    <div className="smh-line"></div>
-                </div>
-
-                <div className="about-description">
-                    <p>
-                        En <strong>Carnicería Los Krenz</strong> nos apasiona brindar productos cárnicos de la más alta calidad.
-                        Con más de 20 años de experiencia, nuestro compromiso es ofrecer cortes frescos y seleccionados cuidadosamente para satisfacer a todos nuestros clientes.
-                    </p>
-                    <p>
-                        Nuestra prioridad es la excelencia en el servicio, la confianza y el trato cercano. Ya sea que busques cortes premium como Wagyu, carnes feedlot, estándar o productos especiales, aquí encontrarás la mejor selección.
-                    </p>
-                    <p>
-                        Nos esforzamos día a día para que cada visita sea una experiencia única, garantizando frescura, sabor y calidad en cada pieza.
+            {/* Sección Hero */}
+            <section
+                ref={heroRef}
+                data-section="hero"
+                className={`shop-hero ${isVisible.hero ? 'animate-in' : ''}`}
+            >
+                <div className="hero-overlay"></div>
+                <div className="hero-content">
+                    <div className="hero-badge">
+                        <span>Calidad Garantizada</span>
+                    </div>
+                    <h1 className="hero-title">
+                        <span className="title-line">Carnicería</span>
+                        <span className="title-line title-highlight">Los Krenz</span>
+                    </h1>
+                    <p className="hero-subtitle">
+                        Tradición familiar, sabores auténticos y la mejor selección de carnes premium
                     </p>
                 </div>
-
-<div className="contact-info">
-    <h2>Contacto</h2>
-    <p>
-        <strong>Dirección:</strong>{' '}
-        <a 
-          href="https://www.google.com/maps/search/?api=1&query=Av.+San+Martín+1234,+Rosario,+Santa+Fe" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="contact-link"
-        >
-          Av. San Martín 1234, Rosario, Santa Fe
-        </a>
-    </p>
-    <p>
-        <strong>Teléfono:</strong>{' '}
-        <a 
-          href="https://wa.me/543411234567" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="contact-link"
-        >
-          +54 341 123 4567
-        </a>
-    </p>
-    <p>
-        <strong>Email:</strong> contacto@carnicerialoskrenz.com
-    </p>
-</div>
-
-
-                {/* Aquí podrías ocultar o quitar el catálogo si solo quieres mostrar 'Nosotros' */}
-                <ItemListContainer category={category as string} limit={false} />
-
             </section>
 
+                    <div className="aus-container">
+                        <div className="aus-grid">
+                            <div className="aus-image-container">
+                                <img src={aboutUsImg} alt="Sobre nosotros" className="aus-image" />
+                                <div className="image-overlay"></div>
+                            </div>
+
+                            <div className="aus-info">
+                                <div className="aus-header">
+                                    <span className="section-tag">Nuestra Historia</span>
+                                    <h2 className="aus-title">Sobre Nosotros</h2>
+                                </div>
+                                
+                                <div className="aus-content">
+                                    <p className="aus-text">
+                                        Nos <strong>apasiona brindar productos frescos y de calidad</strong> a nuestra 
+                                        comunidad. Cada corte, cada elaboración y cada servicio está pensado 
+                                        con amor y dedicación.
+                                    </p>
+                                    
+                                    <p className="aus-text">
+                                        Trabajamos día a día para ofrecerte lo mejor, porque creemos que 
+                                        todos merecen una buena comida. <strong>¡Gracias por elegirnos!</strong>
+                                    </p>
+                                    
+                                    <div className="aus-stats">
+                                        <div className="stat-item">
+                                            <span className="stat-number">10+</span>
+                                            <span className="stat-label">Años de experiencia</span>
+                                        </div>
+                                        <div className="stat-divider"></div>
+                                        <div className="stat-item">
+                                            <span className="stat-number">100%</span>
+                                            <span className="stat-label">Productos frescos</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        
         </div>
-    )
-}
+    );
+};
