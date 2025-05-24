@@ -16,12 +16,13 @@ import { getFirestore } from 'firebase/firestore';
 
 // Firebase configuration (asegurate de tener esto bien configurado en tu archivo .env)
 const firebaseConfig = {
-  apiKey: "AIzaSyDzHQl0JBWvDrLdp00Hjei1xn3wiPeXXyk",
-  authDomain: "carnicerialoskrenz.firebaseapp.com",
-  projectId: "carnicerialoskrenz",
-  storageBucket: "carnicerialoskrenz.firebasestorage.app",
-  messagingSenderId: "784886750743",
-  appId: "1:784886750743:web:5c6226d24ecf018bf94652"
+
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID
 };
 
 
