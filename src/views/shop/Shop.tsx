@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-// Images
-import aboutUsImg from 'assets/img/others/aside.webp';
+// Imágenes
+import aboutUsImg from 'assets/img/others/imagen1.jpeg';
+import aboutUsImg2 from 'assets/img/others/imagen2.jpeg';
+import aboutUsImg3 from 'assets/img/others/imagen3.jpeg';
+import aboutUsImg4 from 'assets/img/others/imagen4.jpeg';
 
 // CSS
 import './Shop.css';
@@ -21,11 +24,7 @@ export const Shop = () => {
 
     const heroRef = useRef<HTMLElement>(null);
     const aboutRef = useRef<HTMLElement>(null);
-    const valuesRef = useRef<HTMLElement>(null);
-    const contactRef = useRef<HTMLElement>(null);
-    const productsRef = useRef<HTMLElement>(null);
 
-    // Observador de intersección para animaciones al hacer scroll
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -33,10 +32,7 @@ export const Shop = () => {
                     if (entry.isIntersecting) {
                         const targetId = entry.target.getAttribute('data-section');
                         if (typeof targetId === 'string') {
-                            setIsVisible(prev => ({
-                                ...prev,
-                                [targetId]: true
-                            }));
+                            setIsVisible(prev => ({ ...prev, [targetId]: true }));
                         }
                     }
                 });
@@ -44,15 +40,12 @@ export const Shop = () => {
             { threshold: 0.2 }
         );
 
-        const refs = [heroRef, aboutRef, valuesRef, contactRef, productsRef];
-        refs.forEach(ref => {
-            if (ref.current) observer.observe(ref.current);
-        });
+        if (heroRef.current) observer.observe(heroRef.current);
+        if (aboutRef.current) observer.observe(aboutRef.current);
 
         return () => observer.disconnect();
     }, []);
 
-    // Redirección si la categoría no es válida
     useEffect(() => {
         const validCategories = ['all', 'wagyu', 'feedlot', 'standard', 'other'];
         if (category && !validCategories.includes(category)) {
@@ -60,27 +53,13 @@ export const Shop = () => {
         }
     }, [category, navigate]);
 
-    // Scroll al top al renderizar
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
 
-    // Títulos de categoría
-    const categoryTitles = {
-        all: 'Todos los Productos',
-        wagyu: 'Carnes Wagyu Premium',
-        feedlot: 'Carnes Feedlot',
-        standard: 'Cortes Tradicionales',
-        other: 'Otros Productos'
-    };
-
-    const getCurrentCategoryTitle = () => {
-        return categoryTitles[category as keyof typeof categoryTitles] || 'Nuestros Productos';
-    };
-
     return (
         <div className="shop">
-            {/* Sección Hero */}
+            {/* Hero */}
             <section
                 ref={heroRef}
                 data-section="hero"
@@ -101,48 +80,26 @@ export const Shop = () => {
                 </div>
             </section>
 
-                    <div className="aus-container">
-                        <div className="aus-grid">
-                            <div className="aus-image-container">
-                                <img src={aboutUsImg} alt="Sobre nosotros" className="aus-image" />
-                                <div className="image-overlay"></div>
-                            </div>
+            {/* Sobre Nosotros */}
+            <section
+                ref={aboutRef}
+                data-section="about"
+                className={`shop-about ${isVisible.about ? 'animate-in' : ''}`}
+            >
+                <div className="about-images-grid">
+                    {[aboutUsImg, aboutUsImg2, aboutUsImg3, aboutUsImg4].map((img, i) => (
+                        <img key={i} src={img} alt={`Sobre nosotros ${i + 1}`} className="about-img" />
+                    ))}
+                </div>
 
-                            <div className="aus-info">
-                                <div className="aus-header">
-                                    <span className="section-tag">Nuestra Historia</span>
-                                    <h2 className="aus-title">Sobre Nosotros</h2>
-                                </div>
-                                
-                                <div className="aus-content">
-                                    <p className="aus-text">
-                                        Nos <strong>apasiona brindar productos frescos y de calidad</strong> a nuestra 
-                                        comunidad. Cada corte, cada elaboración y cada servicio está pensado 
-                                        con amor y dedicación.
-                                    </p>
-                                    
-                                    <p className="aus-text">
-                                        Trabajamos día a día para ofrecerte lo mejor, porque creemos que 
-                                        todos merecen una buena comida. <strong>¡Gracias por elegirnos!</strong>
-                                    </p>
-                                    
-                                    <div className="aus-stats">
-                                        <div className="stat-item">
-                                            <span className="stat-number">10+</span>
-                                            <span className="stat-label">Años de experiencia</span>
-                                        </div>
-                                        <div className="stat-divider"></div>
-                                        <div className="stat-item">
-                                            <span className="stat-number">100%</span>
-                                            <span className="stat-label">Productos frescos</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-        
+                <div className="about-text">
+                    <h2>Sobre Nosotros</h2>
+                    <p>
+                        En Los Krenz, combinamos experiencia, tradición y pasión para ofrecer productos frescos, de calidad
+                        y con el sabor que nuestra comunidad merece. Gracias por confiar en nosotros.
+                    </p>
+                </div>
+            </section>
         </div>
     );
 };
