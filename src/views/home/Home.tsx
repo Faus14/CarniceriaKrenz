@@ -151,7 +151,6 @@ export const Home = () => {
                         </p>
                         
                         <div className="hero-buttons">
-
                             <button className="btn btn-secondary" onClick={scrollToAboutUs}>
                                 Conocenos
                             </button>
@@ -241,75 +240,72 @@ export const Home = () => {
                     </div>
                 </section>
 
-                {/* About Us Section Mejorado */}
+                {/* Contact/About Us Section Mejorado */}
                 <section 
                     ref={aboutUs} 
                     data-section="aboutUs"
                     className={`about-us-section ${isVisible.aboutUs ? 'animate-in' : ''}`}
                 >
-
-                <div className="contact-grid">
-                    {/* Ubicación */}
-                    <div className="contact-card">
-                        <div className="contact-icon">
-                            {/* Aquí podés importar e insertar el ícono si lo tenés */}
-                            {/* <LocationIcon /> */}
-                        </div>
-                        <div className="contact-info">
-                            <h3>Ubicación</h3>
-                            <a 
-                                href="https://maps.app.goo.gl/255FBvBH1jPHcnds8"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="contact-link"
-                            >
-                                Av. San Martin 397<br />
-                                B2905 Gral. Rojo<br />
-                                Provincia de Buenos Aires
-                            </a>
-                        </div>
+                    <div className="section-header">
+                        <h2 className="section-title">Visitanos</h2>
+                        <div className="section-divider"></div>
+                        <p className="section-subtitle">
+                            Te esperamos en nuestro local para brindarte la mejor atención personalizada
+                        </p>
                     </div>
 
-                    {/* WhatsApp */}
-                    <div className="contact-card">
-                        <div className="contact-icon">
-                            {/* <WhatsAppIcon /> */}
-                        </div>
-                        <div className="contact-info">
-                            <h3>WhatsApp</h3>
-                            <a 
-                                href="https://wa.me/5493364010459"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="contact-link whatsapp-link"
-                            >
-                                +54 9 3364 01-0459
-                                <span className="link-subtitle">¡Hacé tu pedido!</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    {/* Horarios */}
-                    <div className="contact-card">
-                        <div className="contact-icon">
-                            {/* <ClockIcon /> */}
-                        </div>
-                        <div className="contact-info">
-                            <h3>Horarios</h3>
-                            <div className="schedule-info">
-                                <div className="schedule-row">
-                                    <span>Lunes a Domingo</span>
-                                    <span className="schedule-time">8:00 - 13:00</span>
+                    <div className="contact-container">
+                        <div className="contact-grid">
+                            {/* Ubicación */}
+                            <div className="contact-card location-card">
+                                <div className="contact-card-header">
+                                    <div className="contact-icon location-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2"/>
+                                        </svg>
+                                    </div>
+                                    <h3>Ubicación</h3>
                                 </div>
-                                <div className="schedule-row">
-                                    <span></span>
-                                    <span className="schedule-time">16:00 - 21:00</span>
+                                <div className="contact-info">
+                                    <a 
+                                        href="https://maps.app.goo.gl/255FBvBH1jPHcnds8"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="contact-link location-link"
+                                    >
+                                        <span className="address-line">Av. San Martin 397</span>
+                                        <span className="address-line"> Gral. Rojo</span>
+        
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* WhatsApp */}
+                            <div className="contact-card whatsapp-card">
+                                <div className="contact-card-header">
+                                    <div className="contact-icon whatsapp-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h3>WhatsApp</h3>
+                                </div>
+                                <div className="contact-info">
+                                    <a 
+                                        href="https://wa.me/5493364010459"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="contact-link whatsapp-link"
+                                    >
+                                        <span className="phone-number">+54 9 3364 01-0459</span>
+                                        <span className="link-action"> ¡Hacé tu pedido ahora!</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
+                    </div>
                 </section>
             </div>
         </>
